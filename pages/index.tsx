@@ -1,11 +1,11 @@
-import Image from "next/image";
-import imagesrc from "../public/sound.png";
 import Error from "@/components/Error";
 import FormItem from "@/components/FormItem";
-import RessBlock from "@/components/RessBlock";
-import RessList from "@/components/RessList";
+import { useAppselector } from "@/store/storeHooks";
+
+const url = "https://api.dictionaryapi.dev/api/v2/entries/en/";
 
 export default function Home() {
+  const err = useAppselector((store) => store.word.iserr);
   return (
     <>
       <div className="app">
@@ -15,11 +15,9 @@ export default function Home() {
           </h1>
 
           <FormItem />
-          <div className="results">
-            <RessBlock />
-
-            <RessList />
-          </div>
+          {err.text.trim().length && err.value ? (
+            <Error errText={err.text} />
+          ) : null}
         </main>
       </div>
     </>
