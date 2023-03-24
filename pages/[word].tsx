@@ -30,6 +30,7 @@ const word = ({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const disp = useAppDispatch();
   const err = useAppselector((store) => store.word.iserr);
+  console.log(alldata.data);
   useEffect(() => {
     if (alldata.iserr) {
       disp(
@@ -39,9 +40,7 @@ const word = ({
         })
       );
     } else {
-      disp(
-        setErr({ value: false, text: "something went wrong. try another word" })
-      );
+      disp(setErr({ value: false, text: "" }));
     }
   }, []);
 
@@ -54,7 +53,7 @@ const word = ({
           </h1>
 
           <FormItem />
-          {alldata.iserr ? (
+          {alldata.iserr.err ? (
             <Error errText={err.text} />
           ) : (
             <div className="results">
